@@ -1,1 +1,79 @@
 # CFST
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tính Ncu - Cột CFST chịu lệch tâm</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100px;
+      padding: 4px;
+      margin-left: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 8px 12px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Nhập thông số cột CFST</h2>
+  <label>L (mm): <input id="X1" type="number" value="1000"></label>
+  <label>B (mm): <input id="X2" type="number" value="150"></label>
+  <label>t (mm): <input id="X3" type="number" value="5"></label>
+  <label>r (mm): <input id="X4" type="number" value="2"></label>
+  <label>e (mm): <input id="X5" type="number" value="20"></label>
+  <label>fcu (MPa): <input id="X6" type="number" value="60"></label>
+  <label>fy (MPa): <input id="X7" type="number" value="450"></label>
+  <button onclick="calculateNcu()">Tính Ncu</button>
+
+  <h3>Kết quả</h3>
+  <div id="result"></div>
+
+  <script>
+    function calculateNcu() {
+      const X1 = parseFloat(document.getElementById('X1').value);
+      const X2 = parseFloat(document.getElementById('X2').value);
+      const X3 = parseFloat(document.getElementById('X3').value);
+      const X4 = parseFloat(document.getElementById('X4').value);
+      const X5 = parseFloat(document.getElementById('X5').value);
+      const X6 = parseFloat(document.getElementById('X6').value);
+      const X7 = parseFloat(document.getElementById('X7').value);
+
+      const Y = 104.366 * X3 + 
+                1062.46 * (
+                  (0.00349926 * X5 + 
+                  (-0.00025583 * X2 - 0.113593) * (0.0285089 * X6 - 2.67911) - 1.14448) *
+                  (
+                    -0.0036264 * X6 + 
+                    (
+                      (-0.000571857 * X2 - 0.632872) * (0.00876765 * X2 - 1.51686) + 
+                      1 / (-0.0150239 * X5 - 1.27236)
+                    ) * (
+                      -0.00053571 * X1 + 
+                      (1.70726 - 0.00492201 * X7) * (-0.166697 * X3 - 0.157546) + 
+                      2.92436
+                    ) + 0.835015
+                  )
+                ) + 368.976;
+
+      document.getElementById('result').innerText = `Ncu = ${Y.toFixed(2)} kN`;
+    }
+  </script>
+</body>
+</html>
